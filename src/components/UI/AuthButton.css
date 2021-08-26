@@ -1,0 +1,23 @@
+@media screen and (min-width: 320px) {
+  .auth-button {
+    display: block;
+    width: 260px;
+    height: 45px;
+    margin-top: 69px;
+    background: #4285f4;
+    border: none;
+    border-radius: 3px;
+    font-size: 12px;
+    line-height: 15px;
+    font-weight: 500;
+    color: #fff;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .auth-button {
+    width: 396px;
+    font-size: 14px;
+    line-height: 17px;
+  }
+}

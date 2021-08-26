@@ -1,0 +1,49 @@
+@media screen and (min-width: 320px) {
+  .not-found {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .not-found__header {
+    font-size: 80px;
+    line-height: 97px;
+  }
+
+  .not-found__text {
+    padding-top: 10px;
+    font-size: 12px;
+    line-height: 15px;
+    text-align: center;
+  }
+
+  .not-found__go-back {
+    margin: 26.3vh 0 8.6vh;
+    width: 42px;
+    align-self: center;
+    text-decoration: none;
+    font-size: 12px;
+    line-height: 15px;
+    color: #4285f4;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .not-found__header {
+    font-size: 140px;
+    line-height: 169px;
+  }
+
+  .not-found__text {
+    padding-top: 5px;
+    font-size: 16px;
+    line-height: 19px;
+  }
+
+  .not-found__go-back {
+    font-size: 14px;
+    line-height: 17px;
+  }
+}
