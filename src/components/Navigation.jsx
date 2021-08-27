@@ -8,8 +8,6 @@ export default function Navigation() {
   let location = useLocation();
   const [isChecked, toggleCheck] = useState(false);
 
-  console.log(location.pathname);
-
   const menuItems = [
     ["/", "menu__item menu__item_home", "Главная"],
     ["/movies", "menu__item", "Фильмы"],

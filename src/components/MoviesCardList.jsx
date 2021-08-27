@@ -7,7 +7,7 @@ export default function MoviesCardList(props) {
   return (
     <div className="movies-cardlist">
       {cards.map((card) => (
-        <MoviesCard card={card} key={card.title} />
+        <MoviesCard card={card} key={card.title} saved={props.saved} />
       ))}
     </div>
   );

@@ -12,31 +12,31 @@ export default function Movies() {
       title: "33 слова о дизайне",
       img: mockImg,
       duration: "142",
-      label: "false",
+      label: false,
     },
     {
       title: "34 слова о дизайне",
       img: mockImg,
       duration: "143",
-      label: "false",
+      label: false,
     },
     {
       title: "32 слова о дизайне",
       img: mockImg2,
       duration: "144",
-      label: "true",
+      label: true,
     },
     {
       title: "43 слова о дизайне",
       img: mockImg,
       duration: "144",
-      label: "false",
+      label: false,
     },
     {
       title: "42 слова о дизайне",
       img: mockImg,
       duration: "144",
-      label: "false",
+      label: false,
     },
   ];
 

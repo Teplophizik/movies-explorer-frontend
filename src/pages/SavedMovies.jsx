@@ -10,20 +10,20 @@ export default function Movies() {
       title: "33 слова о дизайне",
       img: mockImg,
       duration: "142",
-      label: "false",
+      label: true,
     },
     {
       title: "42 слова о дизайне",
       img: mockImg2,
       duration: "144",
-      label: "false",
+      label: true,
     },
   ];
 
   return (
     <>
       <Search />
-      <MoviesCardList cards={mockData} />
+      <MoviesCardList cards={mockData} saved={true} />
     </>
   );
 }

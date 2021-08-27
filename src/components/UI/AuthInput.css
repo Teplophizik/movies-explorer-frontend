@@ -23,6 +23,7 @@
   .auth-input__input:focus {
     font-weight: 500;
     outline: none;
+    box-shadow: 0 0 3px 1px #4285f4aa;
   }
 
   .auth-input__input_invalid {

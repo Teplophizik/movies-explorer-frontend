@@ -22,16 +22,30 @@
     font-weight: 500;
   }
 
-  .card__label {
+  .card__save {
     width: 16px;
     height: 16px;
     background-color: #313131;
     border: 2px solid #fff;
     border-radius: 50%;
+    cursor: pointer;
   }
 
-  .card__label_light {
+  .card__save:hover {
+    transform: scale(1.1);
+  }
+
+  .card__save_saved {
     background-color: #2be080;
+  }
+
+  .card__save_delete {
+    background-color: transparent;
+    border: none;
+    border-radius: 1;
+    background-image: url(../images/icon-del.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
   }
 
   .card__duration {
