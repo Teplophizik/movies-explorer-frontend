@@ -1,0 +1,142 @@
+@media screen and (min-width: 320px) {
+  .about-me {
+    padding: 70px 14px 0;
+  }
+
+  .bio {
+    display: grid;
+    grid-template-areas:
+      "avatar"
+      "title"
+      "subtitle"
+      "social";
+    padding-top: 60px;
+    padding-bottom: 70px;
+  }
+
+  .bio__avatar {
+    grid-area: avatar;
+    width: 292px;
+    border-radius: 10px;
+  }
+
+  .bio__title {
+    margin-top: 40px;
+    font-size: 30px;
+    line-height: 36px;
+    letter-spacing: -0.04em;
+  }
+
+  .bio__subtitle {
+    margin-top: 20px;
+    font-size: 11px;
+    line-height: 16px;
+    font-weight: 500;
+  }
+
+  .bio__main-text {
+    margin-top: 20px;
+    font-size: 11px;
+    line-height: 16px;
+  }
+
+  .bio__social {
+    margin-top: 40px;
+    display: flex;
+  }
+
+  .bio__list-items {
+    margin-right: 26px;
+    list-style-type: none;
+  }
+
+  .bio__links {
+    text-decoration: none;
+    font-size: 14px;
+    line-height: 17px;
+    font-weight: 500;
+    color: #fff;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .about-me {
+    padding: 90px 50px 0;
+  }
+
+  .bio {
+    grid-template-areas:
+      "title avatar"
+      "subtitle avatar"
+      "social avatar"
+      ". avatar";
+    column-gap: 49px;
+    padding-top: 66px;
+    padding-bottom: 90px;
+  }
+
+  .bio__title {
+    margin-top: 0;
+    font-size: 40px;
+    line-height: 40px;
+  }
+
+  .bio__subtitle {
+    margin-top: 16px;
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  .bio__main-text {
+    margin-top: 20px;
+    max-width: 364px;
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  .bio__avatar {
+    width: 255px;
+    justify-self: end;
+  }
+
+  .bio__social {
+    margin-top: 87px;
+  }
+
+  .bio__list-items {
+    margin-right: 20px;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .about-me {
+    padding: 110px 70px 0;
+  }
+
+  .bio {
+    column-gap: 270px;
+    padding-bottom: 96px;
+  }
+
+  .bio__title {
+    font-size: 50px;
+    line-height: 58px;
+  }
+
+  .bio__subtitle {
+    margin-top: 18px;
+    font-size: 18px;
+    line-height: 20px;
+  }
+
+  .bio__main-text {
+    margin-top: 26px;
+    max-width: 600px;
+    font-size: 14px;
+    line-height: 22px;
+  }
+
+  .bio__avatar {
+    width: 270px;
+  }
+}

@@ -1,0 +1,188 @@
+@media screen and (min-width: 320px) {
+  .menu {
+    position: relative;
+  }
+
+  .menu__auth-btn {
+    margin-left: 26px;
+    font-size: 10px;
+    line-height: 16px;
+    font-weight: 500;
+    color: #fff;
+    text-decoration: none;
+  }
+
+  .menu__auth-btn_green {
+    padding: 5px 12px;
+    background-color: #3ddc84;
+    color: #000;
+    border-radius: 3px;
+  }
+
+  .menu__item {
+    padding-top: 24px;
+  }
+
+  .menu__link {
+    padding-bottom: 7px;
+    font-size: 18px;
+    line-height: 22px;
+    font-weight: 500;
+    color: #fff;
+    text-decoration: none;
+  }
+
+  .menu__link_active {
+    border-bottom: 2px solid #fff;
+  }
+
+  .menu__profile {
+    display: inline-block;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    text-decoration: none;
+    color: #fff;
+    padding-top: 40vh;
+  }
+
+  .menu__profile::after {
+    content: url(../images/icon-profile.svg);
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 13px;
+    width: 30px;
+    height: 30px;
+    background-color: #313131;
+    border-radius: 6px;
+  }
+
+  .menu__toggle {
+    opacity: 0;
+  }
+
+  .menu__btn {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    right: 9px;
+    width: 26px;
+    height: 26px;
+    cursor: pointer;
+    z-index: 100;
+  }
+
+  .menu__btn > span,
+  .menu__btn > span::before,
+  .menu__btn > span::after {
+    display: block;
+    position: absolute;
+    width: 22px;
+    height: 2px;
+    background-color: #fff;
+  }
+  .menu__btn > span::before {
+    content: "";
+    top: -8px;
+  }
+  .menu__btn > span::after {
+    content: "";
+    top: 8px;
+  }
+
+  .menu__line {
+    display: flex;
+    list-style: none;
+  }
+
+  .menu__box {
+    display: block;
+    position: fixed;
+    visibility: hidden;
+    top: 0;
+    right: 0;
+    width: 100vw;
+    max-width: 520px;
+    height: 100vh;
+    margin: 0;
+    padding: 80px 0;
+    list-style: none;
+    text-align: center;
+    background-color: #202020;
+    z-index: 99;
+  }
+
+  .menu__toggle:checked ~ .menu__btn {
+    position: fixed;
+    top: 28px;
+    right: 22px;
+  }
+
+  .menu__toggle:checked ~ .menu__btn > span {
+    transform: rotate(45deg);
+  }
+  .menu__toggle:checked ~ .menu__btn > span::before {
+    top: 0;
+    transform: rotate(0);
+  }
+  .menu__toggle:checked ~ .menu__btn > span::after {
+    top: 0;
+    transform: rotate(90deg);
+  }
+  .menu__toggle:checked ~ .menu__box {
+    visibility: visible;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .menu__toggle,
+  .menu__btn,
+  .menu__item_home {
+    display: none;
+  }
+
+  .menu__box {
+    display: flex;
+    position: static;
+    width: unset;
+    max-width: unset;
+    height: unset;
+    visibility: visible;
+    flex-direction: row;
+    background-color: transparent;
+  }
+
+  .menu__auth-btn {
+    margin-left: 30px;
+    font-size: 12px;
+  }
+
+  .menu__auth-btn_green {
+    padding: 8px 20px;
+  }
+
+  .menu__item {
+    padding: 0;
+    align-self: center;
+  }
+
+  .menu__link {
+    margin-left: 20px;
+    font-size: 14px;
+    line-height: 18px;
+    font-weight: 400;
+    color: #fff;
+    text-decoration: none;
+  }
+
+  .menu__link_active {
+    font-weight: 500;
+  }
+
+  .menu__profile {
+    margin-left: 50px;
+    padding-top: 0;
+  }
+}

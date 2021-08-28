@@ -1,0 +1,81 @@
+@media screen and (min-width: 320px) {
+  .card {
+    width: 300px;
+    height: 235px;
+    background-color: #222222;
+    box-shadow: 0px 16px 24px rgba(0, 0, 0, 0.05);
+    border-radius: 10px;
+  }
+
+  .card__img {
+    width: 300px;
+    height: 168px;
+    object-fit: contain;
+  }
+
+  .card__title {
+    display: flex;
+    justify-content: space-between;
+    padding: 14px 12px 0;
+    font-size: 13px;
+    line-height: 16px;
+    font-weight: 500;
+  }
+
+  .card__save {
+    width: 16px;
+    height: 16px;
+    background-color: #313131;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+
+  .card__save:hover {
+    transform: scale(1.1);
+  }
+
+  .card__save_saved {
+    background-color: #2be080;
+  }
+
+  .card__save_delete {
+    background-color: transparent;
+    border: none;
+    border-radius: 1;
+    background-image: url(../images/icon-del.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+
+  .card__duration {
+    padding: 10px 0 0 12px;
+    font-size: 11px;
+    line-height: 13px;
+    color: #8b8b8b;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .card {
+    width: 339px;
+    height: 257px;
+  }
+
+  .card__img {
+    width: 339px;
+    height: 190px;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .card {
+    width: 270px;
+    height: 218px;
+  }
+
+  .card__img {
+    width: 270px;
+    height: 151px;
+  }
+}

@@ -1,0 +1,28 @@
+@media screen and (min-width: 320px) {
+  .movies__btn {
+    display: block;
+    margin: 80px auto 0;
+    width: 240px;
+    height: 36px;
+    background-color: #2f2f2f;
+    border: none;
+    border-radius: 6px;
+    font-size: 12px;
+    line-height: 15px;
+    font-weight: 500;
+    color: #ffffff;
+    cursor: pointer;
+    outline: none;
+  }
+
+  .movies__btn:hover,
+  .movies__btn:focus {
+    box-shadow: 2px 2px 2px 1px #2f2f2faa;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .movies__btn {
+    width: 320px;
+  }
+}

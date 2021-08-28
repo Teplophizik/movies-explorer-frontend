@@ -1,0 +1,6 @@
+.blank-main {
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  align-items: flex-end;
+}
