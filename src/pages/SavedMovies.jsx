@@ -1,29 +1,27 @@
 import MoviesCardList from "../components/MoviesCardList";
 import Search from "../components/Search";
+import useSearch from "../components/useSearch";
 
-import mockImg from "../images/mock-img.png";
-import mockImg2 from "../images/mock-img2.png";
-
-export default function Movies() {
-  const mockData = [
-    {
-      title: "33 слова о дизайне",
-      img: mockImg,
-      duration: "142",
-      label: true,
-    },
-    {
-      title: "42 слова о дизайне",
-      img: mockImg2,
-      duration: "144",
-      label: true,
-    },
-  ];
+export default function SavedMovies() {
+  const {
+    handleInput,
+    searchString,
+    onSearch,
+    filteredMovies,
+    filtered,
+    toggleFilter,
+  } = useSearch("saved");
 
   return (
     <>
-      <Search />
-      <MoviesCardList cards={mockData} saved={true} />
+      <Search
+        onInputChange={handleInput}
+        onSearch={onSearch}
+        toggleCheck={toggleFilter}
+        isChecked={filtered}
+        value={searchString}
+      />
+      <MoviesCardList cards={filteredMovies} />
     </>
   );
 }

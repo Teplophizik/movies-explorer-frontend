@@ -39,6 +39,19 @@
     color: #fff;
   }
 
+  .profile__input:focus {
+    font-weight: 500;
+    outline: none;
+    box-shadow: 0 0 3px 1px #4285f4aa;
+  }
+
+  .profile__input-error {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    color: #ee3465;
+  }
+
   .profile__edit-btn {
     margin-top: 220px;
     background-color: transparent;
@@ -47,6 +60,11 @@
     line-height: 15px;
     color: #fff;
     cursor: pointer;
+  }
+
+  .profile__edit-btn_disabled {
+    color: #424242;
+    cursor: default;
   }
 
   .profile__exit-btn {

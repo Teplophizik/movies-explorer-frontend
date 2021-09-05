@@ -1,13 +1,15 @@
 import "./AuthButton.css";
 
 export default function AuthButton(props) {
+  const { className, text, ...attrs } = props;
+
   return (
     <button
-      className={
-        props.className ? props.className + " auth-button" : "auth-button"
-      }
+      className={className ? "auth-button " + className : "auth-button"}
+      type="submit"
+      {...attrs}
     >
-      {props.text}
+      {text}
     </button>
   );
 }

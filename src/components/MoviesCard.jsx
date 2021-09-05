@@ -1,33 +1,78 @@
-import { useState } from "react";
+import { MoviesImgUrl } from "../utils/constants";
+import { mainApi } from "../utils/MainApi";
 import "./MoviesCard.css";
 
 export default function MoviesCard(props) {
-  const { card } = props;
+  const itsSaved = window.location.pathname === "/saved-movies";
+  const { card, addToSavedMovies, removeFromSavedMovies, isSave } = props;
+  const minutes = card.duration % 60;
+  const hours = (card.duration - minutes) / 60;
 
-  const [saved, toggleSave] = useState(card.label);
+  function toggleSaveMovie(e) {
+    e.preventDefault();
 
-  function saveMovie() {
-    toggleSave(!saved);
+    if (!isSave) {
+      mainApi
+        .saveMovie({
+          movieId: card.id,
+          nameRU: card.nameRU,
+          nameEN: card.nameEN,
+          thumbnail: MoviesImgUrl + card.image.formats.thumbnail.url,
+          trailer: card.trailerLink,
+          image: MoviesImgUrl + card.image.url,
+          description: card.description,
+          year: card.year,
+          duration: card.duration,
+          director: card.director,
+          country: card.country,
+        })
+        .then((data) => {
+          console.log(data);
+          addToSavedMovies(data);
+        });
+    } else {
+      deleteMovie();
+    }
+  }
+
+  function deleteMovie(e = null) {
+    if (e) e.preventDefault();
+
+    removeFromSavedMovies(card);
   }
 
   return (
     <div className="card">
-      <img src={card.img} alt={card.title} className="card__img" />
-      <div className="card__title">
-        {card.title}
-        <button
-          className={
-            "card__save" +
-            (props.saved
-              ? " card__save_delete"
-              : saved
-              ? " card__save_saved"
-              : "")
-          }
-          onClick={saveMovie}
-        ></button>
-      </div>
-      <p className="card__duration">{card.duration}</p>
+      <a
+        className="card__link"
+        href={itsSaved ? card.trailer : card.trailerLink}
+        target="_blank"
+        rel="noreferrer"
+      >
+        <img
+          src={itsSaved ? card.image : MoviesImgUrl + card.image.url}
+          alt={card.nameRU}
+          className="card__img"
+        />
+        <div className="card__title-wrap">
+          <p className="card__title">{card.nameRU}</p>
+          <button
+            className={
+              "card__save" +
+              (itsSaved
+                ? " card__save_delete"
+                : isSave
+                ? " card__save_saved"
+                : "")
+            }
+            onClick={itsSaved ? deleteMovie : toggleSaveMovie}
+          ></button>
+        </div>
+        <p className="card__duration">
+          {hours > 0 ? `${hours}ч` : ""}
+          {`${minutes}м`}
+        </p>
+      </a>
     </div>
   );
 }

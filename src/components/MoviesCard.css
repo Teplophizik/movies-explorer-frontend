@@ -5,6 +5,13 @@
     background-color: #222222;
     box-shadow: 0px 16px 24px rgba(0, 0, 0, 0.05);
     border-radius: 10px;
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  .card__link {
+    text-decoration: none;
+    color: #fff;
   }
 
   .card__img {
@@ -13,13 +20,20 @@
     object-fit: contain;
   }
 
-  .card__title {
+  .card__title-wrap {
     display: flex;
     justify-content: space-between;
     padding: 14px 12px 0;
     font-size: 13px;
     line-height: 16px;
     font-weight: 500;
+  }
+
+  .card__title {
+    width: 88%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
   }
 
   .card__save {

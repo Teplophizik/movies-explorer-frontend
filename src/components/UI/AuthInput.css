@@ -31,10 +31,10 @@
   }
 
   .auth-input__error {
-    height: 10px;
     font-size: 10px;
     line-height: 12px;
     color: #ee3465;
+    padding-bottom: 10px;
   }
 }
 

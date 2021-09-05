@@ -11,7 +11,7 @@
 @media screen and (min-width: 768px) {
   .movies-cardlist {
     grid-template-columns: repeat(auto-fill, 339px);
-    padding: 143px 70px 0;
+    padding: 143px 30px 0;
     column-gap: 30px;
     row-gap: 36px;
   }

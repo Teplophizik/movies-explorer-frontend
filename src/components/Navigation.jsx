@@ -1,9 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Link, useLocation } from "react-router-dom";
+
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
+
 import "./Navigation.css";
 
 export default function Navigation() {
-  const isLogged = true;
+  const { isLoggedIn } = useContext(CurrentUserContext);
 
   let location = useLocation();
   const [isChecked, toggleCheck] = useState(false);
@@ -27,7 +30,7 @@ export default function Navigation() {
 
   return (
     <div className="menu">
-      {!isLogged ? (
+      {!isLoggedIn ? (
         <ul className="menu__line">
           <li className="menu__item">
             <Link className="menu__auth-btn" to="/signup">

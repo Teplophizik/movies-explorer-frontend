@@ -5,6 +5,7 @@ import BlankLayout from "../pages/_layouts/blank";
 import WFooterLayout from "../pages/_layouts/wFooter";
 import AuthLayout from "../pages/_layouts/auth";
 
+import ProtectedRoute from "../components/ProtectedRoute";
 import Main from "../pages/Main";
 import Movies from "../pages/Movies";
 import SavedMovies from "../pages/SavedMovies";
@@ -21,21 +22,21 @@ function Routes() {
           <Main />
         </DefaultLayout>
       </Route>
-      <Route path="/movies">
+      <ProtectedRoute path="/movies">
         <DefaultLayout>
           <Movies />
         </DefaultLayout>
-      </Route>
-      <Route path="/saved-movies">
+      </ProtectedRoute>
+      <ProtectedRoute path="/saved-movies">
         <DefaultLayout>
           <SavedMovies />
         </DefaultLayout>
-      </Route>
-      <Route path="/profile">
+      </ProtectedRoute>
+      <ProtectedRoute path="/profile">
         <WFooterLayout>
           <Profile />
         </WFooterLayout>
-      </Route>
+      </ProtectedRoute>
       <Route path="/signin">
         <AuthLayout>
           <Login />

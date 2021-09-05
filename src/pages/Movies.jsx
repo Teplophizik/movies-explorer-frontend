@@ -1,50 +1,82 @@
+import { useEffect, useState } from "react";
 import MoviesCardList from "../components/MoviesCardList";
 import Search from "../components/Search";
+import Preloader from "../components/UI/Preloader";
+import useSearch from "../components/useSearch";
+import {
+  SIZE_CARD_DESKTOP,
+  SIZE_CARD_MOBILE,
+  SIZE_CARD_TABLET,
+  SIZE_MARGIN_MOBILE,
+  SIZE_MARGIN_TABLET,
+  SIZE_MARGIN_DESKTOP,
+  COUNT_CARD_MOBILE,
+} from "../utils/constants";
 
 import "./Movies.css";
 
-import mockImg from "../images/mock-img.png";
-import mockImg2 from "../images/mock-img2.png";
-
 export default function Movies() {
-  const mockData = [
-    {
-      title: "33 слова о дизайне",
-      img: mockImg,
-      duration: "142",
-      label: false,
-    },
-    {
-      title: "34 слова о дизайне",
-      img: mockImg,
-      duration: "143",
-      label: false,
-    },
-    {
-      title: "32 слова о дизайне",
-      img: mockImg2,
-      duration: "144",
-      label: true,
-    },
-    {
-      title: "43 слова о дизайне",
-      img: mockImg,
-      duration: "144",
-      label: false,
-    },
-    {
-      title: "42 слова о дизайне",
-      img: mockImg,
-      duration: "144",
-      label: false,
-    },
-  ];
+  const {
+    handleInput,
+    searchString,
+    onSearch,
+    isLoading,
+    filteredMovies,
+    filtered,
+    toggleFilter,
+  } = useSearch();
+
+  function calcPerRow() {
+    let cardSize = SIZE_CARD_MOBILE;
+    let margin = SIZE_MARGIN_MOBILE;
+    if (window.innerWidth >= 768 && window.innerWidth < 1280) {
+      cardSize = SIZE_CARD_TABLET;
+      margin = SIZE_MARGIN_TABLET;
+    } else if (window.innerWidth >= 1280) {
+      cardSize = SIZE_CARD_DESKTOP;
+      margin = SIZE_MARGIN_DESKTOP;
+    }
+    return Math.floor(
+      (window.innerWidth - margin - ((window.innerWidth - margin) % cardSize)) /
+        cardSize
+    );
+  }
+
+  let countNextCards =
+    window.innerWidth < 640 ? COUNT_CARD_MOBILE : calcPerRow();
+
+  const [countVisible, setCountVisible] = useState(countNextCards);
+  const [currentVisible, setCurrentVisible] = useState([]);
+
+  function loadMore(e) {
+    e.preventDefault();
+
+    setCountVisible(countVisible + countNextCards);
+  }
+
+  useEffect(() => {
+    setCurrentVisible([...filteredMovies.slice(0, countVisible)]);
+  }, [filteredMovies, countVisible]);
 
   return (
     <>
-      <Search />
-      <MoviesCardList cards={mockData} />
-      <button className="movies__btn">Ещё</button>
+      <Search
+        onInputChange={handleInput}
+        onSearch={onSearch}
+        toggleCheck={toggleFilter}
+        isChecked={filtered}
+        value={searchString}
+      />
+
+      {isLoading && <Preloader />}
+      {!isLoading && filteredMovies.length > 0 && (
+        <MoviesCardList cards={currentVisible} />
+      )}
+      {!isLoading && currentVisible.length < filteredMovies.length && (
+        <button className="movies__btn" onClick={loadMore}>
+          Ещё
+        </button>
+      )}
     </>
   );
 }
