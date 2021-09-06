@@ -1,44 +1,85 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import MoviesCardList from "../components/MoviesCardList";
 import Search from "../components/Search";
 import Preloader from "../components/UI/Preloader";
-import useSearch from "../components/useSearch";
-import {
-  SIZE_CARD_DESKTOP,
-  SIZE_CARD_MOBILE,
-  SIZE_CARD_TABLET,
-  SIZE_MARGIN_MOBILE,
-  SIZE_MARGIN_TABLET,
-  SIZE_MARGIN_DESKTOP,
-  COUNT_CARD_MOBILE,
-} from "../utils/constants";
+import MoviesListMessage from "../components/UI/MoviesListMessage";
+import { search, calcPerRow } from "../utils/functions";
+import { moviesApi } from "../utils/MoviesApi";
+import { COUNT_CARD_MOBILE } from "../utils/constants";
+import useSavedMovies from "../components/useSavedMovies";
 
 import "./Movies.css";
 
 export default function Movies() {
-  const {
-    handleInput,
-    searchString,
-    onSearch,
-    isLoading,
-    filteredMovies,
-    filtered,
-    toggleFilter,
-  } = useSearch();
+  const [movies, setMovies] = useState([]);
+  const [searchString, setSearchString] = useState("");
+  const [searched, setSearched] = useState(false);
+  const [filtered, setFiltered] = useState(false);
+  const [filteredMovies, setFilteredMovies] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
+  const { saveMovie, deleteMovie } = useSavedMovies();
+  const firstView = useRef(true);
 
-  function calcPerRow() {
-    let cardSize = SIZE_CARD_MOBILE;
-    let margin = SIZE_MARGIN_MOBILE;
-    if (window.innerWidth >= 768 && window.innerWidth < 1280) {
-      cardSize = SIZE_CARD_TABLET;
-      margin = SIZE_MARGIN_TABLET;
-    } else if (window.innerWidth >= 1280) {
-      cardSize = SIZE_CARD_DESKTOP;
-      margin = SIZE_MARGIN_DESKTOP;
+  if (JSON.parse(localStorage.getItem("searched")) && firstView.current) {
+    const { cachedSearchString, cachedFiltered } = JSON.parse(
+      localStorage.getItem("searchedData")
+    );
+    setSearchString(cachedSearchString);
+    setFiltered(cachedFiltered);
+    search(
+      JSON.parse(localStorage.getItem("movies")),
+      cachedSearchString,
+      cachedFiltered,
+      setFilteredMovies,
+      setIsLoading
+    );
+  }
+
+  firstView.current = false;
+
+  useEffect(() => {
+    if (searched) {
+      search(movies, searchString, filtered, setFilteredMovies, setIsLoading);
     }
-    return Math.floor(
-      (window.innerWidth - margin - ((window.innerWidth - margin) % cardSize)) /
-        cardSize
+  }, [filtered]);
+
+  useEffect(() => {
+    setSearched(false);
+    localStorage.setItem("searched", "false");
+  }, [searchString]);
+
+  function onSearch() {
+    setIsLoading(true);
+    if (!localStorage.getItem("movies")) {
+      moviesApi
+        .getAll()
+        .then((data) => {
+          setMovies(data);
+          localStorage.setItem("movies", JSON.stringify(data));
+          search(data, searchString, filtered, setFilteredMovies, setIsLoading);
+        })
+        .catch((err) => {
+          setError(err.message);
+        });
+    } else {
+      setMovies(JSON.parse(localStorage.getItem("movies")));
+      search(
+        JSON.parse(localStorage.getItem("movies")),
+        searchString,
+        filtered,
+        setFilteredMovies,
+        setIsLoading
+      );
+    }
+    setSearched(true);
+    localStorage.setItem("searched", "true");
+    localStorage.setItem(
+      "searchedData",
+      JSON.stringify({
+        cachedSearchString: searchString,
+        cachedFiltered: filtered,
+      })
     );
   }
 
@@ -61,21 +102,31 @@ export default function Movies() {
   return (
     <>
       <Search
-        onInputChange={handleInput}
+        searchString={searchString}
+        setSearchString={setSearchString}
         onSearch={onSearch}
-        toggleCheck={toggleFilter}
-        isChecked={filtered}
-        value={searchString}
+        filtered={filtered}
+        setFiltered={setFiltered}
       />
-
+      {!isLoading && error && (
+        <MoviesListMessage text={error} setError={setError} />
+      )}
       {isLoading && <Preloader />}
       {!isLoading && filteredMovies.length > 0 && (
-        <MoviesCardList cards={currentVisible} />
+        <MoviesCardList
+          cards={currentVisible}
+          saveMovie={saveMovie}
+          deleteMovie={deleteMovie}
+          setError={setError}
+        />
       )}
       {!isLoading && currentVisible.length < filteredMovies.length && (
         <button className="movies__btn" onClick={loadMore}>
           Ещё
         </button>
+      )}
+      {!isLoading && searched && filteredMovies.length === 0 && (
+        <p className="movies__empty">Ничего не найдено</p>
       )}
     </>
   );

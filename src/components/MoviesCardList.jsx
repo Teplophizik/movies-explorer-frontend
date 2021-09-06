@@ -1,19 +1,20 @@
 import MoviesCard from "./MoviesCard";
-import useSavedMovies from "../components/useSavedMovies";
 import "./MoviesCardList.css";
 
 export default function MoviesCardList(props) {
-  const { savedMovies, addToSavedMovies, removeFromSavedMovies } =
-    useSavedMovies();
-  const cards = props.cards || savedMovies;
+  const cards = props.cards;
+  const { saveMovie, deleteMovie, setError } = props;
 
   function checkSaved(id) {
     let res = false;
-    savedMovies.map((movie) => {
-      if (movie.movieId === id) {
-        res = true;
-      }
-    });
+    if (localStorage.getItem("savedMovies")) {
+      const savedMovies = JSON.parse(localStorage.getItem("savedMovies"));
+      savedMovies.map((movie) => {
+        if (movie.movieId === id) {
+          res = true;
+        }
+      });
+    }
     return res;
   }
 
@@ -23,9 +24,10 @@ export default function MoviesCardList(props) {
         <MoviesCard
           key={card.id || card._id}
           card={card}
-          addToSavedMovies={addToSavedMovies}
-          removeFromSavedMovies={removeFromSavedMovies}
-          isSave={props.cards && checkSaved(card.id)}
+          saveMovie={saveMovie}
+          deleteMovie={deleteMovie}
+          setError={setError}
+          isSaved={props.cards && checkSaved(card.id)}
         />
       ))}
     </div>

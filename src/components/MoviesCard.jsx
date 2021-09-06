@@ -1,44 +1,32 @@
-import { MoviesImgUrl } from "../utils/constants";
-import { mainApi } from "../utils/MainApi";
+import { MOVIES_IMG_URL } from "../utils/constants";
 import "./MoviesCard.css";
 
 export default function MoviesCard(props) {
   const itsSaved = window.location.pathname === "/saved-movies";
-  const { card, addToSavedMovies, removeFromSavedMovies, isSave } = props;
+  const { card, isSaved, saveMovie, deleteMovie, setError } = props;
   const minutes = card.duration % 60;
   const hours = (card.duration - minutes) / 60;
 
   function toggleSaveMovie(e) {
     e.preventDefault();
 
-    if (!isSave) {
-      mainApi
-        .saveMovie({
-          movieId: card.id,
-          nameRU: card.nameRU,
-          nameEN: card.nameEN,
-          thumbnail: MoviesImgUrl + card.image.formats.thumbnail.url,
-          trailer: card.trailerLink,
-          image: MoviesImgUrl + card.image.url,
-          description: card.description,
-          year: card.year,
-          duration: card.duration,
-          director: card.director,
-          country: card.country,
-        })
-        .then((data) => {
-          console.log(data);
-          addToSavedMovies(data);
-        });
+    if (!isSaved) {
+      saveMovie(card).catch((err) => {
+        setError(err.message);
+      });
     } else {
-      deleteMovie();
+      deleteMovie(card).catch((err) => {
+        setError(err.message);
+      });
     }
   }
 
-  function deleteMovie(e = null) {
-    if (e) e.preventDefault();
+  function removeMovie(e) {
+    e.preventDefault();
 
-    removeFromSavedMovies(card);
+    deleteMovie(card).catch((err) => {
+      setError(err.message);
+    });
   }
 
   return (
@@ -50,7 +38,7 @@ export default function MoviesCard(props) {
         rel="noreferrer"
       >
         <img
-          src={itsSaved ? card.image : MoviesImgUrl + card.image.url}
+          src={itsSaved ? card.image : MOVIES_IMG_URL + card.image.url}
           alt={card.nameRU}
           className="card__img"
         />
@@ -61,11 +49,11 @@ export default function MoviesCard(props) {
               "card__save" +
               (itsSaved
                 ? " card__save_delete"
-                : isSave
+                : isSaved
                 ? " card__save_saved"
                 : "")
             }
-            onClick={itsSaved ? deleteMovie : toggleSaveMovie}
+            onClick={itsSaved ? removeMovie : toggleSaveMovie}
           ></button>
         </div>
         <p className="card__duration">

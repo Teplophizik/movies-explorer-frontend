@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect, useCallback } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { BrowserRouter } from "react-router-dom";
 
 import { CurrentUserContext } from "./contexts/CurrentUserContext";
@@ -10,7 +10,7 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [isLoggedIn, toggleLoggedIn] = useState(true);
 
-  const tokenCheck = useCallback(() => {
+  const tokenCheck = () => {
     mainApi
       .tokenCheck()
       .then((data) => {
@@ -21,11 +21,11 @@ function App() {
         setCurrentUser({});
         toggleLoggedIn(false);
       });
-  }, []);
+  };
 
   useEffect(() => {
     tokenCheck();
-  }, [tokenCheck]);
+  }, []);
 
   const CurrentUserValue = useMemo(
     () => ({ currentUser, setCurrentUser, isLoggedIn, toggleLoggedIn }),

@@ -1,7 +1,6 @@
-// export const MainApiUrl = "movies-xplr.nomoredomains.monster/api";
-export const MainApiUrl = "localhost:3001";
+export const MainApiUrl = "movies-xplr.nomoredomains.monster/api";
 export const MoviesApiUrl = "api.nomoreparties.co/beatfilm-movies";
-export const MoviesImgUrl = "https://api.nomoreparties.co";
+export const MOVIES_IMG_URL = "https://api.nomoreparties.co";
 export const headers = {
   json: { "Content-Type": "application/json" },
 };
