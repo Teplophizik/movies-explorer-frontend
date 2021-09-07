@@ -23,7 +23,7 @@ export default function () {
         country: card.country,
       })
       .then((data) => {
-        let newData = [data];
+        let newData = JSON.stringify([data]);
         if (localStorage.getItem("savedMovies")) {
           const oldData = JSON.parse(localStorage.getItem("savedMovies"));
           oldData.push(data);
