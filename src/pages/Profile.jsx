@@ -1,5 +1,6 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 
+import InfoModal from "../components/UI/InfoModal";
 import { mainApi } from "../utils/MainApi";
 import useFormValidator from "../components/useFormValidator";
 
@@ -11,12 +12,25 @@ export default function Profile() {
   const { currentUser, setCurrentUser, isLoggedIn, toggleLoggedIn } =
     useContext(CurrentUserContext);
 
+  const [infoMessage, setInfoMessage] = useState({});
+  const [notChanged, toggleNotChanged] = useState(true);
   const { values, setValues, handleChange, errors, isValid, resetForm } =
     useFormValidator();
 
   useEffect(() => {
     setValues(currentUser);
   }, [currentUser]);
+
+  useEffect(() => {
+    if (
+      values["name"] === currentUser.name &&
+      values["email"] === currentUser.email
+    ) {
+      toggleNotChanged(true);
+    } else {
+      toggleNotChanged(false);
+    }
+  }, [values]);
 
   function exit() {
     mainApi
@@ -26,7 +40,9 @@ export default function Profile() {
         setCurrentUser();
         localStorage.clear();
       })
-      .catch(console.log); ///////////////
+      .catch((err) => {
+        setInfoMessage({ status: "error", message: err.message });
+      });
   }
 
   function edit() {
@@ -35,12 +51,18 @@ export default function Profile() {
       .then((data) => {
         setCurrentUser(data);
         resetForm();
+        setInfoMessage({ status: "success", message: "Успешно" });
       })
-      .catch(console.log); ///////////////
+      .catch((err) => {
+        setInfoMessage({ status: "error", message: err.message });
+      });
   }
 
   return (
     <form className="profile">
+      {infoMessage.message && (
+        <InfoModal info={infoMessage} setInfoNull={setInfoMessage} />
+      )}
       <p className="profile__header">Привет, {currentUser.name}!</p>
       <label className="profile__label">
         Имя
@@ -71,7 +93,7 @@ export default function Profile() {
       <button
         type="button"
         className={
-          !isValid
+          !isValid || notChanged
             ? "profile__edit-btn profile__edit-btn_disabled"
             : "profile__edit-btn"
         }

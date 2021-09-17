@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import MoviesCardList from "../components/MoviesCardList";
 import Search from "../components/Search";
 import Preloader from "../components/UI/Preloader";
-import MoviesListMessage from "../components/UI/MoviesListMessage";
+import InfoModal from "../components/UI/InfoModal";
 import { search } from "../utils/functions";
 import { mainApi } from "../utils/MainApi";
 import useSavedMovies from "../components/useSavedMovies";
@@ -15,21 +15,26 @@ export default function SavedMovies() {
   const [filtered, setFiltered] = useState(false);
   const [filteredMovies, setFilteredMovies] = useState([]);
   const [isLoading, setisLoading] = useState(true);
-  const [error, setError] = useState("");
+  const [infoMessage, setInfoMessage] = useState({});
   const { saveMovie, deleteMovie, savedMovies, setSavedMovies } =
     useSavedMovies();
 
   useEffect(() => {
-    mainApi
-      .getSavedMovies()
-      .then((data) => {
-        localStorage.setItem("savedMovies", JSON.stringify(data));
-        setSavedMovies(data);
-        setisLoading(false);
-      })
-      .catch((err) => {
-        setError(err.message);
-      });
+    if (!localStorage.getItem("savedMovies")) {
+      mainApi
+        .getSavedMovies()
+        .then((data) => {
+          localStorage.setItem("savedMovies", JSON.stringify(data));
+          setSavedMovies(data);
+          setisLoading(false);
+        })
+        .catch((err) => {
+          setInfoMessage({ status: "error", message: err.message });
+        });
+    } else {
+      setSavedMovies(JSON.parse(localStorage.getItem("savedMovies")));
+      setisLoading(false);
+    }
   }, []);
 
   useEffect(() => {
@@ -72,8 +77,8 @@ export default function SavedMovies() {
         filtered={filtered}
         setFiltered={setFiltered}
       />
-      {!isLoading && error && (
-        <MoviesListMessage text={error} setError={setError} />
+      {!isLoading && infoMessage.message && (
+        <InfoModal info={infoMessage} setInfoNull={setInfoMessage} />
       )}
       {isLoading && <Preloader />}
       {!isLoading && (
@@ -81,7 +86,7 @@ export default function SavedMovies() {
           cards={filteredMovies}
           saveMovie={saveMovie}
           deleteMovie={deleteMovie}
-          setError={setError}
+          setInfoNull={setInfoMessage}
         />
       )}
       {!isLoading && searched && filteredMovies.length === 0 && (

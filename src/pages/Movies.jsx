@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import MoviesCardList from "../components/MoviesCardList";
 import Search from "../components/Search";
 import Preloader from "../components/UI/Preloader";
-import MoviesListMessage from "../components/UI/MoviesListMessage";
+import InfoModal from "../components/UI/InfoModal";
 import { search, calcPerRow } from "../utils/functions";
 import { moviesApi } from "../utils/MoviesApi";
 import { COUNT_CARD_MOBILE } from "../utils/constants";
@@ -17,7 +17,7 @@ export default function Movies() {
   const [filtered, setFiltered] = useState(false);
   const [filteredMovies, setFilteredMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [infoMessage, setInfoMessage] = useState({});
   const { saveMovie, deleteMovie } = useSavedMovies();
   const firstView = useRef(true);
 
@@ -60,7 +60,11 @@ export default function Movies() {
           search(data, searchString, filtered, setFilteredMovies, setIsLoading);
         })
         .catch((err) => {
-          setError(err.message);
+          setIsLoading(false);
+          setInfoMessage({ status: "error", message: err.message });
+          setSearched(false);
+          localStorage.setItem("searched", "false");
+          localStorage.setItem("searchedData", "false");
         });
     } else {
       setMovies(JSON.parse(localStorage.getItem("movies")));
@@ -86,6 +90,18 @@ export default function Movies() {
   let countNextCards =
     window.innerWidth < 640 ? COUNT_CARD_MOBILE : calcPerRow();
 
+  useEffect(() => {
+    function handleResize() {
+      countNextCards =
+        window.innerWidth < 640 ? COUNT_CARD_MOBILE : calcPerRow();
+      setCountVisible(countNextCards);
+    }
+    window.addEventListener("resize", handleResize);
+    return function cleanup() {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   const [countVisible, setCountVisible] = useState(countNextCards);
   const [currentVisible, setCurrentVisible] = useState([]);
 
@@ -108,8 +124,8 @@ export default function Movies() {
         filtered={filtered}
         setFiltered={setFiltered}
       />
-      {!isLoading && error && (
-        <MoviesListMessage text={error} setError={setError} />
+      {!isLoading && infoMessage.message && (
+        <InfoModal info={infoMessage} setInfoNull={setInfoMessage} />
       )}
       {isLoading && <Preloader />}
       {!isLoading && filteredMovies.length > 0 && (
@@ -117,7 +133,7 @@ export default function Movies() {
           cards={currentVisible}
           saveMovie={saveMovie}
           deleteMovie={deleteMovie}
-          setError={setError}
+          setInfoNull={setInfoMessage}
         />
       )}
       {!isLoading && currentVisible.length < filteredMovies.length && (

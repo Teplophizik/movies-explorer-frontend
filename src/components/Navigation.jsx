@@ -8,7 +8,7 @@ import "./Navigation.css";
 export default function Navigation() {
   const { isLoggedIn } = useContext(CurrentUserContext);
 
-  let location = useLocation();
+  const location = useLocation();
   const [isChecked, toggleCheck] = useState(false);
 
   const menuItems = [

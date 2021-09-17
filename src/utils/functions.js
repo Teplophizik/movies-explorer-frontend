@@ -2,6 +2,8 @@ import {
   SIZE_CARD_DESKTOP,
   SIZE_CARD_MOBILE,
   SIZE_CARD_TABLET,
+  SIZE_GAP_TABLET,
+  SIZE_GAP_DESKTOP,
   SIZE_MARGIN_MOBILE,
   SIZE_MARGIN_TABLET,
   SIZE_MARGIN_DESKTOP,
@@ -36,15 +38,26 @@ export const search = (
 export const calcPerRow = () => {
   let cardSize = SIZE_CARD_MOBILE;
   let margin = SIZE_MARGIN_MOBILE;
-  if (window.innerWidth >= 768 && window.innerWidth < 1280) {
+  let gap = 0;
+  const windowWidth = window.innerWidth;
+
+  if (windowWidth >= 768 && windowWidth < 1280) {
     cardSize = SIZE_CARD_TABLET;
     margin = SIZE_MARGIN_TABLET;
-  } else if (window.innerWidth >= 1280) {
+    gap = SIZE_GAP_TABLET;
+  } else if (windowWidth >= 1280) {
     cardSize = SIZE_CARD_DESKTOP;
     margin = SIZE_MARGIN_DESKTOP;
+    gap = SIZE_GAP_DESKTOP;
   }
-  return Math.floor(
-    (window.innerWidth - margin - ((window.innerWidth - margin) % cardSize)) /
-      cardSize
+
+  let perRow = Math.floor(
+    (windowWidth - margin - ((windowWidth - margin) % cardSize)) / cardSize
   );
+
+  if (perRow * cardSize + (perRow - 1) * gap + margin > windowWidth) {
+    perRow--;
+  }
+
+  return perRow;
 };
