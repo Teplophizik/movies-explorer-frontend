@@ -19,6 +19,10 @@
   .movies__btn:focus {
     box-shadow: 2px 2px 2px 1px #2f2f2faa;
   }
+
+  .movies__empty {
+    text-align: center;
+  }
 }
 
 @media screen and (min-width: 768px) {

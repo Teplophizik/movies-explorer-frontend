@@ -12,11 +12,23 @@
     font-weight: 500;
     color: #fff;
     outline: none;
+    cursor: pointer;
   }
 
   .auth-button:hover,
   .auth-button:focus {
     box-shadow: 2px 2px 2px 1px #4285f444;
+  }
+
+  .auth-button_disabled {
+    background: #4b5566;
+    color: #818488;
+    cursor: default;
+  }
+
+  .auth-button_disabled:hover,
+  .auth-button_disabled:focus {
+    box-shadow: none;
   }
 }
 

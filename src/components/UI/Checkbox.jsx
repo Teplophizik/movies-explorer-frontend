@@ -1,12 +1,8 @@
-import React from "react";
-
 import "./Checkbox.css";
 
 export default function Checkbox(props) {
-  const [isChecked, toggleCheck] = React.useState(false);
-
   function toggle() {
-    toggleCheck(!isChecked);
+    props.toggleCheck(!props.isChecked);
   }
 
   return (
@@ -14,13 +10,13 @@ export default function Checkbox(props) {
       <input
         className="checkbox__input"
         type="checkbox"
-        checked={isChecked}
+        checked={props.isChecked}
         hidden
         readOnly
       />
       <div
         className={
-          !isChecked
+          !props.isChecked
             ? "checkbox__switch"
             : "checkbox__switch checkbox__switch_checked"
         }

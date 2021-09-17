@@ -1,0 +1,26 @@
+.info-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%);
+  max-width: 300px;
+  background-color: #2f2f2f;
+  border-radius: 8px;
+  padding: 50px 80px;
+  text-align: center;
+}
+
+.info-modal_success {
+  color: #2bff00;
+}
+
+.info-modal_error {
+  color: #ee3465;
+}
+
+.info-modal__close-btn {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  cursor: pointer;
+}
