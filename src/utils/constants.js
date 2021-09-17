@@ -1,5 +1,5 @@
 // export const MainApiUrl = "movies-xplr.nomoredomains.monster/api";
-export const MainApiUrl = "localhost:3001";
+export const MainApiUrl = "teplophizik.asuscomm.com:8001";
 export const MoviesApiUrl = "api.nomoreparties.co/beatfilm-movies";
 export const MOVIES_IMG_URL = "https://api.nomoreparties.co";
 export const headers = {
